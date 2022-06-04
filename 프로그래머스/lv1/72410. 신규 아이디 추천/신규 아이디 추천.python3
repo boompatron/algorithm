@@ -1,0 +1,41 @@
+def solution(new_id):
+    step1 = new_id.lower()
+    print(f"step1 : {step1}")
+    step2 = ''
+    for s in step1:
+        if s.isalnum() or s == '.' or s == '_' or s == '-':
+            step2 += s
+    print(f"step2 : {step2}")
+    step3 = ''
+    for s in range(len(step2)):
+        if not(step2[s] == '.' and len(step3) and step3[-1] == '.'):
+            step3 += step2[s]
+    print(f"step3 : {step3}")
+    step4 = step3
+    if len(step4) and step4[0] == '.':
+        step4 = step4[1:]
+    if len(step4) and step4[-1] == '.':
+        step4 = step4[:-1]
+    print(f"step4 : {step4}")
+    step5 = step4
+    if not len(step5):
+        step5 = 'a'
+    print(f"step5 : {step5}")
+    step6 = step5
+    if len(step6) > 15:
+        step6 = step6[:15]
+    if step6[-1] == '.':
+        step6 = step6[:-1]
+    print(f"step6 : {step6}")
+    step7 = step6
+    if len(step7) <= 2:
+        a = step7[-1]
+        while len(step7) != 3:
+            step7 += a
+    print(f"step7 : {step7}")
+    return step7
+
+
+if __name__ == "__main__":
+    iidd = "123_.def"
+    print(solution(iidd))
