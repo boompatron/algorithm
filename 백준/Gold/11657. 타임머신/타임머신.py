@@ -4,12 +4,12 @@ INF = sys.maxsize
 
 def bellman_ford(adj, ans, start, v, e):
     ans[start] = 0
-    for i in range(v):
+    for i in range(1, v + 1):
         for j in range(e):
             cur_idx, next_idx, cost = adj[j]
             if ans[cur_idx] != INF and ans[next_idx] > ans[cur_idx] + cost:
                 ans[next_idx] = ans[cur_idx] + cost
-                if i == v - 1:
+                if i == v:
                     return True
     return False
 
