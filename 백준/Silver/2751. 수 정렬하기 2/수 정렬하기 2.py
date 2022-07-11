@@ -1,10 +1,16 @@
 import sys
-n = int(input())
-l = [0 for i in range(n)]
-for i in range(n):
-    t = int(sys.stdin.readline())
-    l[i] = t
-a = sorted(l, key=lambda x: x)
-#print(a)
-for i in a:
-    print(i)
+
+
+def solution():
+    n = int(sys.stdin.readline().rstrip())
+    g = []
+    for i in range(n):
+        num = int(sys.stdin.readline().rstrip())
+        g.append(num)
+    g.sort()
+    for i in range(n):
+        print(g[i])
+    
+
+if __name__ == "__main__":
+    solution()
