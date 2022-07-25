@@ -1,27 +1,26 @@
 import sys
+from collections import deque
 
 
 def solution():
     n, m = map(int, sys.stdin.readline().rstrip().split())
-    in_degree, g = [0 for _ in range(n + 1)], [[] for _ in range(n + 1)]
+    in_degree, graph = [0 for _ in range(n + 1)], [[] for _ in range(n + 1)]
     while m:
         a, b = map(int, sys.stdin.readline().rstrip().split())
         in_degree[b] += 1
-        g[a].append(b)
+        graph[a].append(b)
         m -= 1
-    q, ans = [], []
-
-    for i in range(1, n + 1):
-        if in_degree[i] == 0:
-            q.append(i)
-
-    while q:
-        cur = q.pop()
+    dq, ans = deque(), deque()
+    for d in enumerate(in_degree[1:], start=1):
+        if not in_degree[d[0]]:
+            dq.appendleft(d[0])
+    while dq:
+        cur = dq.pop()
         ans.append(cur)
-        for i in g[cur]:
-            in_degree[i] -= 1
-            if in_degree[i] == 0:
-                q.append(i)
+        for g in graph[cur]:
+            in_degree[g] -= 1
+            if not in_degree[g]:
+                dq.appendleft(g)
     print(" ".join(map(str, ans)))
 
 
