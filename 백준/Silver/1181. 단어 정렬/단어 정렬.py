@@ -1,9 +1,13 @@
-n = int(input())
-s_list = ["" for i in range(n)]
-for i in range(n):
-    s = input()
-    s_list[i] = s
-s_list = list(set(s_list))
-l = sorted(s_list, key=lambda x: (len(x), x))
-for i in l:
-    print(i)
+import sys
+
+
+def solution():
+    n = int(sys.stdin.readline().rstrip())
+    g = ['' for _ in range(n)]
+    for _ in range(n):
+        g[_] = sys.stdin.readline().rstrip()
+    print('\n'.join(sorted(set(g), key=lambda x: (len(x), x))))
+
+
+if __name__ == "__main__":
+    solution()
