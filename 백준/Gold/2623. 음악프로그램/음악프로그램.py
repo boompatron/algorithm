@@ -22,11 +22,7 @@ def solution():
             in_degree[g] -= 1
             if not in_degree[g]:
                 dq.appendleft(g)
-    if len(ans) != n:
-        print(0)
-    else:
-        for i in enumerate(ans):
-            print(i[1], end="\n")
+    print(0) if len(ans) != n else print("\n".join(map(str, ans)))
 
 
 if __name__ == "__main__":
