@@ -1,13 +1,13 @@
 import sys
 import heapq
-INF = sys.maxsize / 2
+INF = sys.maxsize
 
 
-def dijkstra(adj, ans, start):
+def dijkstra(start, adj, ans):
     ans[start] = 0
     hq = []
     heapq.heappush(hq, [0, start])
-    while len(hq):
+    while hq:
         dis, idx = heapq.heappop(hq)
         if ans[idx] < dis:
             continue
@@ -22,17 +22,17 @@ def solution():
     v, e, x = map(int, sys.stdin.readline().rstrip().split())
     adj, ans = [[] for _ in range(v + 1)], [[INF for _ in range(v + 1)] for __ in range(v + 1)]
     while e:
-        v1, v2, d = map(int, sys.stdin.readline().rstrip().split())
-        adj[v1].append([v2, d])
+        a, b, c = map(int, sys.stdin.readline().rstrip().split())
+        adj[a].append([b, c])
         e -= 1
     for i in range(1, v + 1):
-        dijkstra(adj, ans[i], i)
-    t = 0
-    for s in range(1, v + 1):
-        if s == x:
+        dijkstra(i, adj, ans[i])
+    answer = 0
+    for i in range(1, v + 1):
+        if i == x:
             continue
-        t = max(t, ans[x][s] + ans[s][x])
-    print(t)
+        answer = max(answer, ans[i][x] + ans[x][i])
+    print(answer)
 
 
 if __name__ == "__main__":
