@@ -10,7 +10,7 @@ int n, x;
 priority_queue<pair<int, int>, vector<pair<int, int>>, comp> pq;
 int main(){
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+    cin.tie(nullptr); cout.tie(nullptr);
     cin >> n;
     while(n--){
         cin >> x;
@@ -21,7 +21,7 @@ int main(){
                 pq.pop();
             }
         }
-        else pq.push(make_pair(abs(x), (x > 0) ? 1 : -1));
+        else pq.emplace(abs(x), (x > 0) ? 1 : -1);
     }
     return 0;
 }
