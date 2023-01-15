@@ -1,17 +1,20 @@
-#include <cstdio>
+#include <iostream>
+using namespace std;
+int dp0[42], dp1[42];
 int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
 	int size;
-	scanf("%d", &size);
-	int dp_0[41] = { 1, 0, 1}, dp_1[41] = { 0, 1, 1};
-	for (int i = 2; i < 41; i++) {
-		dp_0[i] = dp_0[i - 1] + dp_0[i - 2];
-		dp_1[i] = dp_1[i - 1] + dp_1[i - 2];
-	}
-
+	cin >> size;
+	dp0[0] = 1;	dp1[1] = 1;
 	while (size--) {
 		int num;
-		scanf("%d", &num);
-        printf("%d %d\n", dp_0[num], dp_1[num]);
+		cin >> num;
+		for (int i = 2; i <= num; i++) {
+			dp0[i] = dp0[i - 1] + dp0[i - 2];
+			dp1[i] = dp1[i - 1] + dp1[i - 2];
+		}
+		cout << dp0[num] << " " << dp1[num] << endl;
 	}
 	return 0;
 }
