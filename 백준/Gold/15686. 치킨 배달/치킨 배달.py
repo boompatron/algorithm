@@ -5,24 +5,24 @@ from itertools import combinations
 def solution():
     n, m = map(int, sys.stdin.readline().rstrip().split())
     g = [list(map(int, sys.stdin.readline().rstrip().split())) for _ in range(n)]
-    house, chicken = [], []
     ans = sys.maxsize
-    for y, e1 in enumerate(g):
-        for x, e2 in enumerate(e1):
-            if e2 == 1:
-                house.append((x, y))
-            elif e2 == 2:
-                chicken.append((x, y))
-    for c in combinations(chicken, m):
+    houses, chickens = [], []
+    for i in range(n):
+        for j in range(n):
+            if g[i][j] == 1:
+                houses.append([j, i])
+            elif g[i][j] == 2:
+                chickens.append([j, i])
+    for c in combinations(chickens, m):
         tmp = 0
-        for house_x, house_y in house:
-            chicken_len = sys.maxsize
-            for chicken_x, chicken_y in c:
-                chicken_len = min(chicken_len, abs(house_x - chicken_x) + abs(house_y - chicken_y))
-            tmp += chicken_len
-        ans = min(tmp, ans)
+        for house in houses:
+            indi_dis = sys.maxsize
+            for x, y in c:
+                indi_dis = min(indi_dis, abs(x - house[0]) + abs(y - house[1]))
+            tmp += indi_dis
+        ans = min(ans, tmp)
     print(ans)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     solution()
