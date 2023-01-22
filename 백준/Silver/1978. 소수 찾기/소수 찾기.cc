@@ -1,12 +1,13 @@
-#include <cstdio>
+#include <iostream>
+using namespace std;
 int main() {
 	int size, answer;
-	scanf("%d", &size);
+	cin >> size;
 	answer = size;
 	while (size--) {
 		int num;
 		bool isPrimeNum = true;
-		scanf("%d", &num);
+		cin >> num;
 		if (num == 1)
 			answer--;
 		for(int i = 2; i <num; i++)
@@ -15,6 +16,6 @@ int main() {
 				break;
 			}
 	}
-	printf("%d\n", answer);
+	cout << answer;
 	return 0;
 }
