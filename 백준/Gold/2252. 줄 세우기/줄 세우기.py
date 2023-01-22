@@ -1,29 +1,27 @@
 import sys
+from collections import deque
 
 
 def solution():
     n, m = map(int, sys.stdin.readline().rstrip().split())
-    in_degree, g = [0 for _ in range(n + 1)], [[] for _ in range(n + 1)]
-    while m:
+    adj, degree = [[] for _ in range(n + 1)], [0 for _ in range(n + 1)]
+    dq, ans = deque(), deque()
+    for _ in range(m):
         a, b = map(int, sys.stdin.readline().rstrip().split())
-        in_degree[b] += 1
-        g[a].append(b)
-        m -= 1
-    q, ans = [], []
-
+        adj[a].append(b)
+        degree[b] += 1
     for i in range(1, n + 1):
-        if in_degree[i] == 0:
-            q.append(i)
-
-    while q:
-        cur = q.pop()
+        if degree[i] == 0:
+            dq.appendleft(i)
+    while dq:
+        cur = dq.pop()
         ans.append(cur)
-        for i in g[cur]:
-            in_degree[i] -= 1
-            if in_degree[i] == 0:
-                q.append(i)
-    print(" ".join(map(str, ans)))
+        for a in adj[cur]:
+            degree[a] -= 1
+            if degree[a] == 0:
+                dq.appendleft(a)
+    print(' '.join(map(str, ans)))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     solution()
