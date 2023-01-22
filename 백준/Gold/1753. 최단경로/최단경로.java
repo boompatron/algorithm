@@ -36,34 +36,33 @@ public class Main {
         br.close();
     }
 
-    private static void dijkstra(int[] ansList){
+    private static void dijkstra(int[] ansList) {
         ansList[s] = 0;
         Queue<Edge> pq = new PriorityQueue<>();
         pq.add(new Edge(0, s));
-        while(!pq.isEmpty()){
+        while (!pq.isEmpty()) {
             Edge cur = pq.poll();
             int dis = cur.first, cur_idx = cur.second;
-            if(ansList[cur_idx] < dis) continue;
-            for(Edge e : adj.get(cur_idx)){
+            if (ansList[cur_idx] < dis) continue;
+            for (Edge e : adj.get(cur_idx)) {
                 int next_idx = e.first, next_dis = e.second + dis;
-                if(next_dis < ansList[next_idx]){
+                if (next_dis < ansList[next_idx]) {
                     ansList[next_idx] = next_dis;
                     pq.add(new Edge(next_dis, next_idx));
                 }
             }
         }
     }
-    private static class Edge implements Comparable<Edge>{
-        private int first, second;
+}
+class Edge implements Comparable<Edge>{
+    public int first, second;
 
-        public Edge(int first, int second){
-            this.first = first;
-            this.second = second;
-        }
-        @Override
-        public int compareTo(Edge target){
-            return Integer.compare(this.first, target.first);
-        }
+    public Edge(int first, int second){
+        this.first = first;
+        this.second = second;
+    }
+    @Override
+    public int compareTo(Edge target){
+        return Integer.compare(this.first, target.first);
     }
 }
-
