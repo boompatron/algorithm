@@ -1,19 +1,21 @@
 import sys
 
+k, n = map(int, sys.stdin.readline().split())
+arr = []
 
-k, n = map(int, sys.stdin.readline().rstrip().split())
-g = [int(sys.stdin.readline().rstrip()) for _ in range(k)]
+for i in range(k):
+    arr.append(int(input()))
 
-left, right = 1, max(g)
+start = 1
+end = max(arr)
 
-while left <= right:
-    mid = (left + right) // 2
+while (start <= end):
+    mid = (start + end) // 2
     cnt = 0
-    for i in g:
-        cnt += i // mid
+    for i in range(k):
+        cnt += arr[i] // mid
     if cnt >= n:
-        left = mid + 1
+        start = mid + 1
     else:
-        right = mid - 1
-print(right)
-
+        end = mid - 1
+print(end)
