@@ -1,17 +1,19 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
+int dp[302], stair[302];
 int main() {
-	int size, stair[300], dp[300];
-	cin >> size;
-	for (int i = 0; i < size; i++)
+	ios_base::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	int n;
+	cin >> n;
+	for (int i = 1; i <= n; i++)
 		cin >> stair[i];
-	dp[0] = stair[0];
-	dp[1] = max(stair[0] + stair[1], stair[1]);
-	dp[2] = max(stair[0] + stair[2], stair[1] + stair[2]);
-	//dp[2] = max(stair[0] + stair[2], stair[1] + stair[2]);
-	for (int i = 3; i < size; i++)
-		dp[i] = max(dp[i - 2] + stair[i], dp[i - 3] + stair[i - 1] + stair[i]);
-	cout << dp[size - 1];
+	dp[1] = stair[1];
+	dp[2] = stair[1] + stair[2];
+	dp[3] = max(stair[1] + stair[3], stair[2] + stair[3]);
+
+	for (int i = 4; i <= n; i++)
+		dp[i] = max(dp[i - 2] + stair[i], dp[i - 3] + stair[i] + stair[i - 1]);
+	cout << dp[n] << endl;
 	return 0;
 }
