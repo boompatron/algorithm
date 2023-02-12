@@ -34,6 +34,3 @@ dijkstra(start)
 print(ans[end][0])
 print(len(ans[end][1]))
 print(' '.join(map(str, ans[end][1])))
-
-
-
