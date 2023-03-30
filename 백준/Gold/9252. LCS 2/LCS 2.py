@@ -4,21 +4,6 @@ l1, l2 = sys.stdin.readline().rstrip(), sys.stdin.readline().rstrip()
 g = [[0 for _ in range(len(l2) + 1)] for __ in range(len(l1) + 1)]
 
 
-# def print_g():
-#     print(end="\tl2\t")
-#     for i in range(len(l2)):
-#         print(l2[i], end="\t")
-#     print()
-#     for i in range(len(l2) + 1):
-#         if i:
-#             print(l1[i - 1], end="\t")
-#         else:
-#             print("l1", end="\t")
-#         for j in range(len(l1) + 1):
-#             print(g[i][j], end="\t")
-#         print()
-
-
 def fill_in_g():
     for a in range(1, len(l1) + 1):
         for b in range(1, len(l2) + 1):
@@ -49,7 +34,6 @@ def make_lcs():
     return "".join(list(reversed(ans)))
 
 
-# print_g()
 print(fill_in_g())
 print(make_lcs())
 
