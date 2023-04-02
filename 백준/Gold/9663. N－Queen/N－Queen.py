@@ -1,42 +1,28 @@
 import sys
-cnt = 0
-row = []
-# row   [0] [2] [1] [3]
-#       O   X   X   X
-#       X   X   O   X
-#       X   O   X   X
-#       X   X   X   O
 
 
 def is_promising(x):
-    global row
+    global g
     for i in range(x):
-        if row[x] == row[i] or abs(row[x] - row[i]) == abs(x - i):
-            # 첫번째 조건은 같은 행에 위치하는지 확인
-            # 두 번째 조건은 대각선에 위치하는지 확인
+        if g[i] == g[x] or abs(g[i] - g[x]) == abs(x - i):
             return False
     return True
 
 
-def n_queen(x, n):
-    global cnt
+def n_queen(x):
+    global ans
     if x == n:
-        cnt += 1
+        ans += 1
         return
     for i in range(n):
-        global row
-        row[x] = i
+        global g
+        g[x] = i
         if is_promising(x):
-            n_queen(x + 1, n)
+            n_queen(x + 1)
 
 
-def solution():
-    global row, cnt
-    n = int(sys.stdin.readline().rstrip())
-    row = [0 for _ in range(n)]
-    n_queen(0, n)
-    print(cnt)
-
-
-if __name__ == "__main__":
-    solution()
+n = int(sys.stdin.readline().rstrip())
+ans = 0
+g = [0 for _ in range(n)]
+n_queen(0)
+print(ans)
