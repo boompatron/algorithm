@@ -1,17 +1,7 @@
 import sys
+from itertools import permutations
+
 n, m = map(int, sys.stdin.readline().rstrip().split())
-l = list(map(int, sys.stdin.readline().rstrip().split()))
-l.sort()
-
-
-def f(s):
-    if len(s) == m:
-        print(' '.join(map(str, s)))
-        return
-    for i in l:
-        if i in s:
-            continue
-        f(s + [i])
-
-
-f([])
+g = list(map(int, sys.stdin.readline().rstrip().split()))
+for perm in permutations(sorted(g), m):
+    print(*perm)
