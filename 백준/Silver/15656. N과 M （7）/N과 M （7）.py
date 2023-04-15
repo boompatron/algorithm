@@ -1,15 +1,7 @@
 import sys
+from itertools import product
+
 n, m = map(int, sys.stdin.readline().rstrip().split())
-l = list(map(int, sys.stdin.readline().rstrip().split()))
-l.sort()
-
-
-def f(s):
-    if len(s) == m:
-        print(' '.join(map(str, s)))
-        return
-    for i in l:
-        f(s + [i])
-
-
-f([])
+g = list(map(int, sys.stdin.readline().rstrip().split()))
+for prod in product(sorted(g), repeat=m):
+    print(*prod)
