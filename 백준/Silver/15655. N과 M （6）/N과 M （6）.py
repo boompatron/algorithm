@@ -1,17 +1,7 @@
 import sys
+from itertools import combinations
+
 n, m = map(int, sys.stdin.readline().rstrip().split())
-l = list(map(int, sys.stdin.readline().rstrip().split()))
-l.sort()
-
-
-def f(s):
-    if len(s) == m:
-        print(' '.join(map(str, s)))
-        return
-    for i in l:
-        if i in s or (len(s) and i < s[-1]):
-            continue
-        f(s + [i])
-
-
-f([])
+g = list(map(int, sys.stdin.readline().rstrip().split()))
+for comb in combinations(sorted(g), m):
+    print(*comb)
