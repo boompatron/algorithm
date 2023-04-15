@@ -1,20 +1,6 @@
 import sys
+from itertools import combinations_with_replacement
 
-
-def recursive(n, m, s):
-    if len(s) == m:
-        print(' '.join(map(str, s)))
-    else:
-        for i in range(1, n + 1):
-            if len(s) and s[-1] > i:
-                continue
-            recursive(n, m, s + [i])
-
-
-def solution():
-    n, m = map(int, sys.stdin.readline().rstrip().split())
-    recursive(n, m, [])
-
-
-if __name__ == "__main__":
-    solution()
+n, m = map(int, sys.stdin.readline().rstrip().split())
+for comb_with_rep in combinations_with_replacement([i for i in range(1, n + 1)], m):
+    print(*comb_with_rep)
