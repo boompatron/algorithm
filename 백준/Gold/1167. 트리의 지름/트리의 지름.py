@@ -35,4 +35,3 @@ for i in range(1, v + 1):
         y = i
 bfs(y)
 print(max(distance[1:]))
-
