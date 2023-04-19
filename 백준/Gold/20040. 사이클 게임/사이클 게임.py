@@ -18,18 +18,13 @@ def union_parent(p, a, b):
         return
 
 
-def solution():
-    n, m = map(int, sys.stdin.readline().rstrip().split())
-    parent, ans = [i for i in range(n)], 0
-    for i in range(m):
-        v1, v2 = map(int, sys.stdin.readline().rstrip().split())
-        if get_parent(parent, v1) != get_parent(parent, v2):
-            union_parent(parent, v1, v2)
-        elif get_parent(parent, v1) == get_parent(parent, v2) and not ans:
-            ans = i + 1
-            break
-    print(ans)
-
-
-if __name__ == "__main__":
-    solution()
+v, e = map(int, sys.stdin.readline().rstrip().split())
+parent = [i for i in range(v)]
+for i in range(e):
+    v1, v2 = map(int, sys.stdin.readline().rstrip().split())
+    if get_parent(parent, v1) != get_parent(parent, v2):
+        union_parent(parent, v1, v2)
+    else:
+        print(i + 1)
+        exit(0)
+print(0)
