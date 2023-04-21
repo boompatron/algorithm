@@ -1,43 +1,33 @@
-import heapq
 import sys
-T = int(input())
-for _ in range(T):
-    n = int(input())
-    heap = []  # 최대 힙
-    min_heap = [] # 최소 힙
-    visited = [0] * n
-    for i in range(n):
-        oper, num = sys.stdin.readline().split()
-
-        if oper == 'I':
-            heapq.heappush(min_heap, (int(num), i))
-            heapq.heappush(heap, (-int(num), i))
-            visited[i] = 1
+import heapq
+tc = int(sys.stdin.readline().rstrip())
+while tc:
+    k = int(sys.stdin.readline().rstrip())
+    deleted = [False for _ in range(k)]
+    max_hq, min_hq = [], []
+    for i in range(k):
+        inst, num = sys.stdin.readline().rstrip().split()
+        num = int(num)
+        if inst == 'I':
+            heapq.heappush(min_hq, (num, i))
+            heapq.heappush(max_hq, (-num, i))
+            deleted[i] = True
         else:
-            if num == '1':   
-                # 이미 제거된 정수 제거
-                while heap and not visited[heap[0][1]]:
-                    heapq.heappop(heap)
-                 # 최댓값 삭제
-                if heap:
-                    visited[heap[0][1]] = 0
-                    heapq.heappop(heap)
-                 
-            else:             # 최솟값 삭제
-                # 이미 제거된 정수 제거
-                while min_heap and not visited[min_heap[0][1]]:
-                    heapq.heappop(min_heap)
-				# 최솟값 삭제
-                if min_heap:
-                    visited[min_heap[0][1]] = 0
-                    heapq.heappop(min_heap)
-
-    if 1 not in visited:
-        print('EMPTY')
-    else:
-        while heap and not visited[heap[0][1]]:
-            heapq.heappop(heap)
-        while min_heap and not visited[min_heap[0][1]]:
-            heapq.heappop(min_heap)
-
-        print(-heap[0][0], min_heap[0][0])
+            if num == 1:  # 최댓값 삭제
+                while max_hq and not deleted[max_hq[0][1]]:
+                    heapq.heappop(max_hq)
+                if max_hq:
+                    deleted[max_hq[0][1]] = False
+                    heapq.heappop(max_hq)
+            else:  # 최솟값 삭제
+                while min_hq and not deleted[min_hq[0][1]]:
+                    heapq.heappop(min_hq)
+                if min_hq:
+                    deleted[min_hq[0][1]] = False
+                    heapq.heappop(min_hq)
+    while max_hq and not deleted[max_hq[0][1]]:
+        heapq.heappop(max_hq)
+    while min_hq and not deleted[min_hq[0][1]]:
+        heapq.heappop(min_hq)
+    print('EMPTY' if not max_hq or not min_hq else f'{-max_hq[0][0]} {min_hq[0][0]}')
+    tc -= 1
