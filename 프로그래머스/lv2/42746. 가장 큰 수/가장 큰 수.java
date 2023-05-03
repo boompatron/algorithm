@@ -1,20 +1,25 @@
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
+
 class Solution {
     public String solution(int[] numbers) {
-        String[] strings = new String[numbers.length];
-        for(int i = 0; i < numbers.length; i++){
-            strings[i] = Integer.toString(numbers[i]);
+        String[] tmp = new String[numbers.length];
+        
+        for (int i = 0; i < numbers.length; i++) {
+            tmp[i] = Integer.toString(numbers[i]);
         }
-        Arrays.sort(strings, new Comparator<String>() {
+        
+        Arrays.sort(tmp, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
                 return (o2 + o1).compareTo(o1 + o2);
             }
         });
-        if(strings[0].equals("0")) return "0";
-        String ans = "";
-        for(String s : strings) ans += s;
-        return ans;
+        
+        if (tmp[0].equals("0")) return "0";
+        
+        StringBuilder answer = new StringBuilder();
+        
+        for (String t: tmp) answer.append(t);
+        return answer.toString();
     }
 }
