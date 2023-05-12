@@ -6,7 +6,6 @@ def solution(cap, n, deliveries, pickups):
             del_pos = i
             break
     for i in range(n - 1, -1, -1):
-        print(pickups[i])
         if pickups[i]:
             pick_pos = i
             break
