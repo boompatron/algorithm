@@ -1,24 +1,21 @@
 import sys
-input = sys.stdin.readline
 
-n = int(input())
-cases = list(map(int, input().split()))
-lis = [0]
+n = int(sys.stdin.readline().rstrip())
+g = list(map(int, sys.stdin.readline().rstrip().split()))
 
-for case in cases:
-    if lis[-1]<case:
-        lis.append(case)
+ans = [0]
+for cur in g:
+    if ans[-1] < cur:
+        ans.append(cur)
     else:
         left = 0
-        right = len(lis)
+        right = len(ans)
 
-        while left<right:
-            mid = (right+left)//2
-            if lis[mid]<case:
-                left = mid+1
+        while left < right:
+            mid = (right + left) // 2
+            if ans[mid] < cur:
+                left = mid + 1
             else:
                 right = mid
-        lis[right] = case
-
-print(len(lis)-1)
-    
+        ans[right] = cur
+print(len(ans) - 1)
