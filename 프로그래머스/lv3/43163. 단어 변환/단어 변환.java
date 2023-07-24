@@ -1,84 +1,76 @@
 import java.util.*;
 
 class Solution {
-    public int solution(String begin, String target, String[] words) {
-        Map<String, ArrayList<String>> adj = new HashMap<>();
-        int n = words.length, m = words[0].length();
-        
-        adj.put(begin, new ArrayList<String>());
-        
-        boolean isTargetIn = false;
-        
-        for (String word: words){
-            adj.put(word, new ArrayList<String>());
-            int tmp = 0;
-            
-            for (int i = 0; i < m; i++){
-                if (begin.charAt(i) != word.charAt(i)) tmp ++;
-            }
-            if (tmp == 1)
-                adj.get(begin).add(word);
-            if (word.equals(target))
-                isTargetIn = true;
-        }
-        
-        if (!isTargetIn)
-            return 0;
-        
-        
-        for (int i = 0; i < n; i++){
-            for (int j = i + 1; j < n; j++){             
-                int cnt = 0;
-                for (int k = 0; k < m; k++){
-                    if (words[i].charAt(k) != words[j].charAt(k))
-                        cnt++;
-                }
-                if (cnt == 1){
-                    adj.get(words[i]).add(words[j]);
-                    adj.get(words[j]).add(words[i]);
-                }
-            }
-        }
-        
-        for(String key: adj.keySet()){
-            System.out.print("key : " + key + ", values : ");
-            for (String value: adj.get(key)){
-                System.out.print(value + ", ");
-            }
-            System.out.println();
-        }
-        
-        int ans = n + 1;
-        Deque<Pos> dq = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-        dq.add(new Pos(begin, 0));
-        visited.add(begin);
-        
-        while (!dq.isEmpty()){
-            Pos cur = dq.poll();
-            System.out.println("cur : " + cur.s + ", " + cur.n);
-            
-            if (target.equals(cur.s))
-                ans = Math.min(ans, cur.n);
+	int n = 0;
+	int m = 0;
+	Map<String, List<String>> adj = new HashMap<>();
+	Deque<A> dq = new LinkedList<>();
+	Set<String> visited = new HashSet<>();
 
-            
-            for (String word: adj.get(cur.s)){
-                if (!visited.contains(word)){
-                    dq.add(new Pos(word, cur.n + 1));
-                    visited.add(word);
-                }
-            }
-        }
+	public int solution(String begin, String target, String[] words) {
+		n = words.length;
+		m = begin.length();
+
+		adj.put(begin, new ArrayList<>());
+        for (int i = 0; i < n; i++) adj.put(words[i], new ArrayList<>());
         
-        return ans;
-    }
+		visited.add(begin);
+		for (int i = 0; i < n; i++) {
+			int cnt = 0;
+			for (int k = 0; k < m; k++) {
+				if (begin.charAt(k) != words[i].charAt(k))
+					cnt++;
+			}
+			if (cnt == 1) adj.get(begin).add(words[i]);
+		}
+
+        boolean isTargetInWords = false;
+        
+		for (int i = 0; i < n; i++) {
+			String cur = words[i];
+            
+            if (cur.equals(target)) isTargetInWords = true;
+            
+			// adj.put(cur, new ArrayList<>());
+			for (int j = i + 1; j < n; j++) {
+				int cnt = 0;
+				for (int k = 0; k < m; k++) {
+					if (cur.charAt(k) != words[j].charAt(k))
+						cnt++;
+				}
+
+				if (cnt == 1) {
+                    adj.get(cur).add(words[j]);
+                    adj.get(words[j]).add(cur);
+                }
+                
+			}
+		}
+        
+        if (!isTargetInWords) return 0;
+
+		dq.add(new A(begin, 0));
+		while (!dq.isEmpty()) {
+			A a = dq.poll();
+			if (a.word.equals(target)) return a.distance;
+
+			for (String aa: adj.get(a.word)) {
+				if (!visited.contains(aa)) {
+					dq.add(new A(aa, a.distance + 1));
+				}
+			}
+		}
+
+		return 0;
+	}
 }
 
-class Pos{
-    String s;
-    int n;
-    public Pos(String s, int n){
-        this.s = s;
-        this.n = n;
-    }
+class A {
+	String word;
+	int distance;
+
+	public A( String word, int distance) {
+		this.distance = distance;
+		this.word = word;
+	}
 }
