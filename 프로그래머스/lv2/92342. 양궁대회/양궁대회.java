@@ -43,13 +43,15 @@ class Solution {
 	}
 
 	int calculateScore(int[] ryan) {
-		int ryanScore = 0, apeachScore = 0;
+		int score = 0;
+        // int ryanScore = 0, apeachScore = 0;
 		for (int i = 0; i < 11; i++) {
 			if (ryan[i] == 0 && apeachInfo[i] == 0) continue;
-			if (ryan[i] > apeachInfo[i]) 	ryanScore += 10 - i;
-			else 							apeachScore += 10 - i;
+            score += (ryan[i] > apeachInfo[i]) ? 10 - i : i - 10;
+			// if (ryan[i] > apeachInfo[i]) 	ryanScore += 10 - i;
+			// else 							apeachScore += 10 - i;
 		}
-		return ryanScore - apeachScore;
+		return score;
 	}
 
 	boolean isMoreSmaller(int[] ryan) {
