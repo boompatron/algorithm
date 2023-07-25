@@ -1,24 +1,29 @@
-from collections import defaultdict
-
-
 def solution(info, edges):
-    adj = defaultdict(set)
-    for u, v in edges:
-        adj[u].add(v)
-    ans = [0 for _ in range(len(info))]
-
-    def dfs(cur: int, sheep: int, wolf: int, next_nums: set):
-        if info[cur]:
-            wolf += 1
+    n = len(info)
+    visited = [False for _ in range(n)]
+    ans = []
+    
+    def dfs(sheep: int, wolf: int):
+        if sheep > wolf:
+            ans.append(sheep)
         else:
-            sheep += 1
-        ans[cur] = max(ans[cur], sheep)
-        if sheep <= wolf:
             return
-        next_nums |= adj[cur]
-        if not next_nums:
-            return
-        for n in list(next_nums):
-            dfs(n, sheep, wolf, {i for i in next_nums if i != n})
-    dfs(0, 0, 0, set())
+        
+        for parent, child in edges:
+            if visited[parent] and not visited[child]:
+                visited[child] = True
+                
+                if not info[child]:
+                    dfs(sheep + 1, wolf)
+                else:
+                    dfs(sheep, wolf + 1)
+                    
+                visited[child] = False
+    
+    
+    visited[0] = True
+    dfs(1, 0)
+    
     return max(ans)
+
+    
