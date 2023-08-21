@@ -52,14 +52,6 @@ def merge(x1, y1, x2, y2):
             for j in range(51):
                 if get_parent(j, i) == (x1, y1):
                     parent[i][j] = (x2, y2)
-    # menu[int(y2)][int(x2)] = 'EMPTY'
-
-    # val2를 가지고 있던 집합이 모두 val1의 값을 가지게 한다
-    # for i in range(1, 51):
-    #     for j in range(1, 51):
-    #         tx, ty = get_parent(j, i)
-    #         if (tx, ty) == (rx, ry):
-    #             menu[i][j] = menu[ry][rx]
 
 
 def unmerge(x, y):
