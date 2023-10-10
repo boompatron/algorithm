@@ -1,9 +1,10 @@
+import sys
 from collections import deque
 dxs, dys = (1, -1, 0, 0), (0, 0, 1, -1)
 
-n, m, t = map(int, input().rstrip().split())
-g = [deque(map(int, input().rstrip().split())) for _ in range(n)]
-inst = [list(map(int, input().rstrip().split())) for _ in range(t)]
+n, m, t = map(int, sys.stdin.readline().rstrip().split())
+g = [deque(map(int, sys.stdin.readline().rstrip().split())) for _ in range(n)]
+inst = [list(map(int, sys.stdin.readline().rstrip().split())) for _ in range(t)]
 zero_num = 0
 
 
