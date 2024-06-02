@@ -1,62 +1,103 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <algorithm>
+
 using namespace std;
-const int INF = 1e7;
+using edge = pair<int, int>; // weight, enode
+using pq = priority_queue<edge, vector<edge>, greater<edge>>;
 
-int n, e, v1, v2, ans[1005];
-vector<pair<int, int>> adj[1005];
-priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+vector<vector<edge> > matrix;
 
-int dijkstra(int start, int end)
-{
-    fill(ans, ans + n + 1, INF);
-    ans[start] = 0;
+int dijkstra(vector<int> dist, pq myPQ, vector<bool> _visited, int _target) {
+	while (!myPQ.empty()) {
+		edge top = myPQ.top();
+		myPQ.pop();
 
-    pq.emplace(0, start);
-    while (!pq.empty())
-    {
-        pair cur = pq.top();
-        pq.pop();
+		int snode = top.second;
+		int sdistance = top.first;
 
-        if (ans[cur.second] < cur.first)
-            continue;
+		if (snode == _target) {
+			return dist[_target];
+		}
 
-        for (pair nnode : adj[cur.second]) {
-            int ncost = cur.first + nnode.second;
+		if (_visited[snode]) continue;
+		_visited[snode] = true;
 
-            if (ncost >= ans[nnode.first])
-                continue;
+		for (edge i : matrix[snode]) {
+			int enode = i.second;
+			int weight = i.first;
 
-            ans[nnode.first] = ncost;
-            pq.emplace(ncost, nnode.first);
-        }
-    }
-
-    return ans[end];
+			if (!_visited[enode] && dist[enode] > sdistance + weight) {
+				dist[enode] = sdistance + weight;
+				myPQ.push({ dist[enode], enode });
+			}
+		}
+	}
+	return -1;
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+int main(void) {
+	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
+	int N, E;
+	cin >> N >> E;
 
-    cin >> n >> e;
-    int a, b, c;
-    while (e--) {
-        cin >> a >> b >> c;
-        adj[a].emplace_back(b, c);
-        adj[b].emplace_back(a, c);
-    }
-    cin >> v1 >> v2;
+	matrix.resize(N + 1);
 
-    int aa = min(dijkstra(1, v1) + dijkstra(v1, v2) + dijkstra(v2, n), dijkstra(1, v2) + dijkstra(v2, v1) + dijkstra(v1, n));
-    if (aa >= INF) aa = -1;
+	for (int i = 0; i < E; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
 
-    cout << aa;
+		matrix[a].push_back({ c, b });
+		matrix[b].push_back({ c, a });
+	}
 
-    return 0;
+	int targ1, targ2;
+	cin >> targ1 >> targ2;
+
+	vector<int> distance(N + 1, 100000000);
+	distance[1] = 0;
+
+	pq myQ;
+	myQ.push({ 0, 1 });
+
+	vector<bool> visited(N + 1, false);
+
+	int dv1 = dijkstra(distance, myQ, visited, targ1);
+	int dv2 = dijkstra(distance, myQ, visited, targ2);
+
+	fill(distance.begin(), distance.end(), 100000000);
+	distance[targ1] = 0;
+
+	myQ = {};
+	myQ.push({ 0, targ1 });
+
+	int dv12 = dijkstra(distance, myQ, visited, targ2);
+	int dv1N = dijkstra(distance, myQ, visited, N);
+
+	fill(distance.begin(), distance.end(), 100000000);
+	distance[targ2] = 0;
+
+	myQ = {};
+	myQ.push({ 0, targ2 });
+
+	int dv21 = dijkstra(distance, myQ, visited, targ1);
+	int dv2N = dijkstra(distance, myQ, visited, N);
+
+	int answer = 1000000000;
+	if (dv1 != -1 && dv12 != -1 && dv2N != -1) {
+		answer = min(answer, dv1 + dv12 + dv2N);
+	}
+	if (dv2 != -1 && dv21 != -1 && dv1N != -1) {
+		answer = min(answer, dv2 + dv21 + dv1N);
+	}
+
+	if (answer == 1000000000) {
+		cout << -1;
+	}
+	else {
+		cout << answer;
+	}
+
+	return 0;
 }
